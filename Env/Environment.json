@@ -1,0 +1,9 @@
+{
+	"url": "https://www.saucedemo.com/",
+	"validUser": "standard_user",
+	"validPassword": "secret_sauce",
+	"invalidUser": "invalid_user",
+	"invalidPassword": "invalid_pass",
+    "lockedUser": "locked_out_user",
+    "lockedPassword": "secret_sauce"
+}
