@@ -13,13 +13,15 @@ const invalidUser = env.invalidUser;
 const invalidPassword = env.invalidPassword;
 
 test.describe('SauceDemo Login', () => {
-  test.only('Login with valid credentials', async ({ page }) => {
+  test('Login with valid credentials', async ({ page }) => {
     const login = new LoginPage(page);
     await login.goto(SAUCE_URL);
+    await login.loginWithValidCredentials(validUser, validPassword);
   });
 
   test('Login with invalid credentials shows error', async ({ page }) => {
     const login = new LoginPage(page);
-    
+    await login.goto(SAUCE_URL);
+    await login.loginWithInvalidCredentials(invalidUser, invalidPassword);
   });
 });

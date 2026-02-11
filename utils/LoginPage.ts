@@ -7,13 +7,14 @@ export class LoginPage {
 	private loginButton: string;
 	private error: string;
 	private title: string;
-
+	private appLogo: string;
 	constructor(page: Page) {
 		this.page = page;
 		this.userName = '#user-name';
 		this.password = '#password';
 		this.loginButton = '#login-button';
-		this.error = '[data-test="error"]';
+		this.appLogo = 'div.app_logo';
+		this.error = 'h3[data-test="error"]';
 		this.title = '.title';
 	}
 
@@ -24,17 +25,21 @@ export class LoginPage {
 	}
 
 	async login(username: string, password: string): Promise<void> {
-		await this.page.fill(this.userName, username);
-		await this.page.fill(this.password, password);
-		await this.page.click(this.loginButton);
+		
 	}
 
 	async loginWithValidCredentials(validUser: string, validPassword: string): Promise<void> {
-		await this.login(validUser, validPassword);
+		await this.page.fill(this.userName, validUser);
+		await this.page.fill(this.password, validPassword);
+		await this.page.click(this.loginButton);
+		await expect(this.page.locator(this.appLogo)).toBeVisible();
 	}
 
 	async loginWithInvalidCredentials(invalidUser: string, invalidPassword: string): Promise<void> {
-		await this.login(invalidUser, invalidPassword);
+        await this.page.fill(this.userName, invalidUser);
+		await this.page.fill(this.password, invalidPassword);
+		await this.page.click(this.loginButton);
+		await expect(this.page.locator(this.error)).toBeVisible();
 	}
 
 	errorLocator(): Locator {
