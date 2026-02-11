@@ -41,13 +41,23 @@ export class LoginPage {
 		await this.page.click(this.loginButton);
 		await expect(this.page.locator(this.error)).toBeVisible();
 	}
-
-	errorLocator(): Locator {
-		return this.page.locator(this.error);
+	async loginWithEmptyUsername(invalidUser: string, invalidPassword: string): Promise<void> {
+        await this.page.fill(this.userName, invalidUser);
+		await this.page.fill(this.password, invalidPassword);
+		await this.page.click(this.loginButton);
+		await expect(this.page.locator(this.error)).toContainText('Username is required');
 	}
-
-	titleLocator(): Locator {
-		return this.page.locator(this.title);
+	async loginWithEmptyPassword(invalidUser: string, invalidPassword: string): Promise<void> {
+        await this.page.fill(this.userName, invalidUser);
+		await this.page.fill(this.password, invalidPassword);
+		await this.page.click(this.loginButton);
+		await expect(this.page.locator(this.error)).toContainText('Password is required');
+	}
+	async loginWithLockedUser(invalidUser: string, invalidPassword: string): Promise<void> {
+        await this.page.fill(this.userName, invalidUser);
+		await this.page.fill(this.password, invalidPassword);
+		await this.page.click(this.loginButton);
+		await expect(this.page.locator(this.error)).toContainText('locked out');
 	}
 }
 
